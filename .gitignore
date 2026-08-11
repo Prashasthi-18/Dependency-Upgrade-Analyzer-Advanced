@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Flask
+instance/
+.flaskenv
+
+# Environment variables / secrets
+.env
+*.env
+
+# Generated reports (runtime output, not source)
+reports/*.txt
+!reports/.gitkeep
+
+# On-disk cache for fetched changelog/release data
+cache/
+
+# Editor/OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dependency Upgrade Impact Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Dependency Upgrade Impact Analyzer</h1>
+        <p class="subtitle">What changed when upgrading a package from version X to version Y?</p>
+
+        <form method="POST" action="/analyze" class="analyze-form">
+            <label for="ecosystem">Ecosystem</label>
+            <select id="ecosystem" name="ecosystem">
+                <option value="pypi" {% if ecosystem == 'pypi' %}selected{% endif %}>PyPI (Python)</option>
+                <option value="npm" {% if ecosystem == 'npm' %}selected{% endif %}>npm (JavaScript)</option>
+            </select>
+
+            <label for="package">Package Name</label>
+            <input type="text" id="package" name="package" placeholder="e.g. django"
+                   value="{{ package }}" required>
+
+            <label for="current_version">Current Version</label>
+            <input type="text" id="current_version" name="current_version" placeholder="e.g. 5.0.0"
+                   value="{{ current_version }}" required>
+
+            <label for="target_version">Target Version</label>
+            <input type="text" id="target_version" name="target_version" placeholder="e.g. 5.2.4"
+                   value="{{ target_version }}" required>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="include_prereleases" name="include_prereleases"
+                       {% if include_prereleases %}checked{% endif %}>
+                Include prereleases (alpha / beta / rc)
+            </label>
+
+            <button type="submit">Analyze</button>
+        </form>
+
+        {% if error %}
+        <div class="error-box">{{ error }}</div>
+        {% endif %}
+
+        {% if report %}
+        <div class="report-box">
+            <div class="report-header">
+                <h2>Report</h2>
+                <a href="/download" class="download-btn">Download Report (.txt)</a>
+            </div>
+            <pre>{{ report }}</pre>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
